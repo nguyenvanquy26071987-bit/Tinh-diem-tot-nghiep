@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
         }
 
@@ -43,13 +43,13 @@
             align-items: center;
             justify-content: center;
             font-size: 30px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         h1 {
             font-size: 26px;
             color: #0b1c3d;
-            margin: 5px 0 10px 0;
+            margin: 5px 0 5px 0;
             line-height: 1.3;
         }
 
@@ -57,7 +57,15 @@
             color: #5f6368;
             font-size: 15px;
             line-height: 1.5;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
+        }
+        
+        .author {
+            color: #d35400;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
         .card {
@@ -78,11 +86,6 @@
             color: #0b1c3d;
         }
 
-        .card-title i {
-            margin-right: 10px;
-            color: #1a73e8;
-        }
-
         .input-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -98,6 +101,7 @@
             font-size: 14px;
             margin-bottom: 8px;
             color: #444;
+            font-weight: 500;
         }
 
         .input-group input, .input-group select {
@@ -134,25 +138,33 @@
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         .btn-calculate:hover {
             background-color: #1557b0;
         }
 
+        .result-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
         .result-box {
             text-align: center;
-            padding: 25px 15px;
+            padding: 20px 15px;
             background: #f8f9fa;
             border-radius: 12px;
-            margin-top: 20px;
             border: 2px dashed #1a73e8;
             display: none;
+            margin-bottom: 20px;
         }
 
         .result-score {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: bold;
             color: #1a73e8;
             margin: 10px 0;
@@ -167,13 +179,32 @@
         .status-fail { color: #d93025; }
         
         .formula-note {
-            background: #e8f0fe;
+            background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            border-left: 4px solid #1a73e8;
+        }
+
+        .formula-note h4 {
             color: #1a73e8;
-            margin-top: 20px;
-            line-height: 1.5;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .formula-note ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+        
+        .formula-note li {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -183,7 +214,8 @@
     <div class="header">
         <div class="icon">🎓</div>
         <h1>Công Cụ Tính Điểm<br>THPT 2026</h1>
-        <div class="subtitle">Tính điểm xét tốt nghiệp chương trình mới nhanh chóng, chính xác.</div>
+        <div class="subtitle">Tính điểm xét tốt nghiệp nhanh chóng, chính xác.</div>
+        <div class="author">Phát triển bởi: Thầy giáo Nguyễn Văn Quý</div>
     </div>
 
     <div class="card">
@@ -209,7 +241,7 @@
     </div>
 
     <div class="card">
-        <div class="card-title">📊 Điểm trung bình học bạ</div>
+        <div class="card-title">📊 Điểm trung bình học bạ 3 năm</div>
         <div class="input-grid-3">
             <div class="input-group">
                 <label>Lớp 10</label>
@@ -230,16 +262,15 @@
         <div class="card-title">⭐ Điểm ưu tiên & Khuyến khích</div>
         <div class="input-grid">
             <div class="input-group full-width">
-                <label>Điểm ưu tiên (Diện chính sách/Khu vực)</label>
+                <label>Điểm ưu tiên</label>
                 <select id="uuTien">
                     <option value="0">Không có (0đ)</option>
-                    <option value="0.25">Diện 2 hoặc KV2-NT (0.25đ)</option>
-                    <option value="0.5">Diện 3 hoặc KV1 (0.5đ)</option>
-                    <option value="0.75">Khu vực + Diện CS (0.75đ)</option>
+                    <option value="0.25">Diện chính sách (0.25đ)</option>
+                    <option value="0.5">Diện chính sách đặc biệt (0.5đ)</option>
                 </select>
             </div>
             <div class="input-group full-width">
-                <label>Điểm khuyến khích (Nghề, HSG...)</label>
+                <label>Điểm khuyến khích</label>
                 <input type="number" id="khuyenKhich" step="0.1" min="0" max="2" placeholder="VD: 1.5 (Để trống nếu không có)">
             </div>
         </div>
@@ -247,16 +278,26 @@
 
     <button class="btn-calculate" onclick="tinhDiem()">XEM KẾT QUẢ</button>
 
-    <div class="result-box" id="resultBox">
-        <div style="font-size: 16px; color: #555;">Điểm Xét Tốt Nghiệp của bạn là:</div>
-        <div class="result-score" id="finalScore">0.00</div>
-        <div class="result-status" id="statusMsg"></div>
-    </div>
+    <div class="result-section">
+        <div class="card-title" style="justify-content: center; font-size: 22px;">Kết Quả</div>
+        
+        <div class="result-box" id="resultBox">
+            <div style="font-size: 16px; color: #555;">Điểm Xét Tốt Nghiệp của bạn là:</div>
+            <div class="result-score" id="finalScore">0.00</div>
+            <div class="result-status" id="statusMsg"></div>
+        </div>
 
-    <div class="formula-note">
-        <strong>Công thức tính (2026):</strong><br>
-        ĐXTN = 50% Điểm thi + 50% Điểm học bạ + Điểm cộng<br><br>
-        <i>* Lưu ý: Học sinh đỗ tốt nghiệp khi ĐXTN từ 5.0 trở lên và không có môn thi nào từ 1.0 điểm trở xuống (điểm liệt).</i>
+        <div class="formula-note">
+            <h4>ℹ️ Công thức tính (2026):</h4>
+            <div style="text-align: center; font-weight: bold; background: #e8eaed; padding: 10px; border-radius: 5px; margin-bottom: 10px; font-family: monospace; font-size: 15px;">
+                ĐXTN = 50% Điểm thi + 50% Điểm học bạ + Điểm cộng
+            </div>
+            <ul>
+                <li><b>Điểm thi:</b> Trung bình 4 môn thi (Toán, Văn, 2 môn tự chọn).</li>
+                <li><b>Điểm học bạ:</b> (ĐTB Lớp 10×1 + ĐTB Lớp 11×2 + ĐTB Lớp 12×3) / 6.</li>
+                <li><b>Điểm liệt:</b> Từ 1.0 điểm trở xuống. ĐXTN từ 5.0 trở lên là đỗ.</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -282,20 +323,27 @@
         let uuTien = parseFloat(document.getElementById('uuTien').value);
         let khuyenKhich = getVal('khuyenKhich');
 
-        // Kiểm tra xem đã nhập đủ điểm thi chưa
-        if(document.getElementById('toan').value === "" || document.getElementById('van').value === "") {
-            alert("Vui lòng nhập đầy đủ điểm các bài thi!");
+        // Kiểm tra xem đã nhập đủ điểm thi và học bạ chưa
+        if(document.getElementById('toan').value === "" || document.getElementById('van').value === "" || 
+           document.getElementById('mon1').value === "" || document.getElementById('mon2').value === "" ||
+           document.getElementById('lop10').value === "" || document.getElementById('lop11').value === "" || document.getElementById('lop12').value === "") {
+            alert("Thầy/Cô và các em vui lòng nhập đầy đủ điểm thi và điểm học bạ 3 năm nhé!");
             return;
         }
 
-        // Tính trung bình
-        let tbThi = (toan + van + mon1 + mon2) / 4;
-        let tbHocBa = (lop10 + lop11 + lop12) / 3;
-
-        // Công thức tính ĐXTN chương trình mới 2026 (50/50)
-        let diemXetTuyen = (tbThi / 2) + (tbHocBa / 2) + uuTien + (khuyenKhich / 4); // Khuyến khích thường chia 4 theo quy chế
+        // 1. Tính trung bình 4 môn thi
+        let diemThi = (toan + van + mon1 + mon2) / 4;
         
-        // Cắt lấy 2 chữ số thập phân
+        // 2. Tính trung bình học bạ theo công thức hệ số: (Lớp 10x1 + Lớp 11x2 + Lớp 12x3)/6
+        let diemHocBa = (lop10 * 1 + lop11 * 2 + lop12 * 3) / 6;
+
+        // 3. Tính điểm cộng (Ưu tiên + Khuyến khích chia 4 theo chuẩn chung)
+        let diemCong = uuTien + (khuyenKhich / 4); 
+
+        // 4. Tính ĐXTN (50% Thi + 50% Học bạ + Điểm cộng)
+        let diemXetTuyen = (diemThi * 0.5) + (diemHocBa * 0.5) + diemCong;
+        
+        // Làm tròn lấy 2 chữ số thập phân
         let finalScore = Math.round(diemXetTuyen * 100) / 100;
 
         // Hiển thị kết quả
@@ -306,8 +354,8 @@
         resultBox.style.display = 'block';
         scoreDisplay.innerText = finalScore.toFixed(2);
 
-        // Kiểm tra điều kiện đỗ/trượt (không bị điểm liệt <=1 và tổng >= 5.0)
-        let isLiet = (toan <= 1 || van <= 1 || mon1 <= 1 || mon2 <= 1);
+        // Kiểm tra điều kiện đỗ/trượt (không bị điểm liệt <=1.0 và tổng >= 5.0)
+        let isLiet = (toan <= 1.0 || van <= 1.0 || mon1 <= 1.0 || mon2 <= 1.0);
 
         if (isLiet) {
             statusMsg.innerText = "TRƯỢT (Bị điểm liệt)";
